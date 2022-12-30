@@ -9,6 +9,15 @@ pygame.display.set_caption("Trivial")
 
 WHITE = (255,255,255)
 BLACK = (0,0,0)
+GREY = (192,192,192)
+PINK = (255,103,204)
+YELLOW = (255,255,102)
+GREEN = (0,204,102)
+ORANGE = (255,128,0)
+BLUE = (0,222,255)
+PURPLE = (204,0,204)
+
+
 
 CENTER = (WIDTH/2,HEIGHT/2)
 RADIUS1 = HEIGHT/2 -10
