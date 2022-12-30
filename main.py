@@ -9,14 +9,14 @@ pygame.display.set_caption("Trivial")
 
 WHITE = (255,255,255)
 BLACK = (0,0,0)
-GREY = (220,220,220)
+GREY = (200,200,200)
 PINK = (255,103,204)
 YELLOW = (255,255,102)
 GREEN = (0,204,102)
 ORANGE = (255,128,0)
 BLUE = (0,222,255)
 PURPLE = (204,0,204)
-
+BACKGROUND = (0,76,153)
 
 
 CENTER = (WIDTH/2,HEIGHT/2)
@@ -48,7 +48,7 @@ def suma(u,v):
 def draw_board():
     pygame.draw.circle(WINDOW, GREY,CENTER,RADIUS1,0)
     pygame.draw.circle(WINDOW, BLACK,CENTER,RADIUS1,1)
-    pygame.draw.circle(WINDOW, WHITE,CENTER,RADIUS2,0)
+    pygame.draw.circle(WINDOW, BACKGROUND,CENTER,RADIUS2,0)
     part1 = split_circ(CENTER,RADIUS1,48)
     part2 = split_circ(CENTER,RADIUS2,48)
     part3 = split_circ(CENTER,RADIUS3,6)
@@ -79,7 +79,7 @@ def draw_board():
 
 
 def draw_window():
-    WINDOW.fill(WHITE)
+    WINDOW.fill(BACKGROUND)
     draw_board()
     pygame.display.update()
 
