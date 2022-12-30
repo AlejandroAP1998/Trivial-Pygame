@@ -9,7 +9,7 @@ pygame.display.set_caption("Trivial")
 
 WHITE = (255,255,255)
 BLACK = (0,0,0)
-GREY = (192,192,192)
+GREY = (220,220,220)
 PINK = (255,103,204)
 YELLOW = (255,255,102)
 GREEN = (0,204,102)
@@ -46,18 +46,28 @@ def suma(u,v):
 
 
 def draw_board():
+    pygame.draw.circle(WINDOW, GREY,CENTER,RADIUS1,0)
     pygame.draw.circle(WINDOW, BLACK,CENTER,RADIUS1,1)
-    pygame.draw.circle(WINDOW, BLACK,CENTER,RADIUS2,1)
+    pygame.draw.circle(WINDOW, WHITE,CENTER,RADIUS2,0)
     part1 = split_circ(CENTER,RADIUS1,48)
     part2 = split_circ(CENTER,RADIUS2,48)
     part3 = split_circ(CENTER,RADIUS3,6)
+
+    for i in range(5):
+        pygame.draw.polygon(WINDOW,GREY,[part3[i],part3[i+1],part2[5+8*i],part2[3+8*i]])
+    pygame.draw.polygon(WINDOW,GREY,[part3[5],part3[0],part2[45],part2[43]])
+    pygame.draw.circle(WINDOW, BLACK,CENTER,RADIUS2,1)
+
     for i in range(48):
         if i not in [4,12,20,28,36,44]:
             pygame.draw.line(WINDOW,BLACK,part1[i],part2[i])
         if i in [3,5,11,13,19,21,27,29,35,37,43]:
             pygame.draw.line(WINDOW,BLACK,part2[i],part3[round(i/8)])
     pygame.draw.line(WINDOW,BLACK,part2[45],part3[0])
+
+    pygame.draw.polygon(WINDOW,GREY,part3,0)
     pygame.draw.polygon(WINDOW,BLACK,part3,1)
+
 
     for i in [3,11,19,27,35]:
         for j in range(1,5):
