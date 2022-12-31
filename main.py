@@ -17,6 +17,23 @@ ORANGE = (255,128,0)
 BLUE = (0,222,255)
 PURPLE = (204,0,204)
 BACKGROUND = (0,76,153)
+COLORS = [PINK,YELLOW,GREEN,ORANGE,BLUE,PURPLE,WHITE]
+
+# Filas que salen desde el círculo exterior hacia el centro. El primer color es la casilla grande, que otorga quesito.
+COL1 = [4,0,2,1,3,5]
+COL2 = [3,2,5,0,1,4]
+COL3 = [1,5,4,2,0,3]
+COL4 = [0,4,3,5,2,1]
+COL5 = [2,3,1,4,5,0]
+COL6 = [5,1,0,3,4,2]
+
+# Tramos entre quesito y quesito, tomando como referencia los números asignados a cada quesito anteriormente.
+COL1TO2 = [0,6,1,5,6,2]
+COL2TO3 = [2,6,0,4,6,5]
+COL3TO4 = [5,6,2,3,6,4]
+COL4TO5 = [4,6,5,1,6,3]
+COL5TO6 = [3,6,4,0,6,1]
+COL6TO1 = [1,6,3,2,6,0]
 
 
 CENTER = (WIDTH/2,HEIGHT/2)
