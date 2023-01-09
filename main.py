@@ -69,7 +69,7 @@ def suma(u,v):
 def polares(x,y,cen=CENTER):
     #Calcula las coordenadas polares (r,theta) del punto (x,y) respecto al punto origen cen
     r = round(np.sqrt((cen[0]-x)**2 + (cen[1]-y)**2))
-    theta = math.atan2(cen[1]-y,cen[0]-x)
+    theta = -math.atan2(y-cen[1],x-cen[0])
     return r,theta
 
 
@@ -79,7 +79,7 @@ def draw_board():
     pygame.draw.circle(WINDOW, BACKGROUND,CENTER,RADIUS2,0)
     
 
-    for i in range(5):
+    for i in range(5): 
         pygame.draw.polygon(WINDOW,GREY,[PART3[i],PART3[i+1],PART2[5+8*i],PART2[3+8*i]])
     pygame.draw.polygon(WINDOW,GREY,[PART3[5],PART3[0],PART2[45],PART2[43]])
     pygame.draw.circle(WINDOW, BLACK,CENTER,RADIUS2,1)
@@ -124,7 +124,7 @@ def main():
                     x,y = pygame.mouse.get_pos()
                     r,theta = polares(x,y)
                     if RADIUS2 <= r <= RADIUS1: # Clic en la zona circular del tablero
-                        print(r)
+                        print(theta)
                     
                     
         draw_window()
@@ -134,3 +134,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
