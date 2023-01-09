@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 import cmath
+import math
 import numpy as np
 
 WIDTH,HEIGHT = 900,790
@@ -51,6 +52,10 @@ def split_circ(cen,r,n):
         lista.append([round(x+rect.real),round(y+rect.imag)])
     return lista
 
+PART1 = split_circ(CENTER,RADIUS1,48)
+PART2 = split_circ(CENTER,RADIUS2,48)
+PART3 = split_circ(CENTER,RADIUS3,6) #Divisiones para los caminos interiores
+
 def mult(a,v):
     #Multiplica el escalar a por el vector bidimensional v, y devuelve la tupla de coordenadas del vector resultado.
     prod = np.dot(a,v)
@@ -61,37 +66,41 @@ def suma(u,v):
     s = np.add(u,v)
     return s[0],s[1]
 
+def polares(x,y,cen=CENTER):
+    #Calcula las coordenadas polares (r,theta) del punto (x,y) respecto al punto origen cen
+    r = round(np.sqrt((cen[0]-x)**2 + (cen[1]-y)**2))
+    theta = math.atan2(cen[1]-y,cen[0]-x)
+    return r,theta
+
 
 def draw_board():
     pygame.draw.circle(WINDOW, GREY,CENTER,RADIUS1,0)
     pygame.draw.circle(WINDOW, BLACK,CENTER,RADIUS1,1)
     pygame.draw.circle(WINDOW, BACKGROUND,CENTER,RADIUS2,0)
-    part1 = split_circ(CENTER,RADIUS1,48)
-    part2 = split_circ(CENTER,RADIUS2,48)
-    part3 = split_circ(CENTER,RADIUS3,6)
+    
 
     for i in range(5):
-        pygame.draw.polygon(WINDOW,GREY,[part3[i],part3[i+1],part2[5+8*i],part2[3+8*i]])
-    pygame.draw.polygon(WINDOW,GREY,[part3[5],part3[0],part2[45],part2[43]])
+        pygame.draw.polygon(WINDOW,GREY,[PART3[i],PART3[i+1],PART2[5+8*i],PART2[3+8*i]])
+    pygame.draw.polygon(WINDOW,GREY,[PART3[5],PART3[0],PART2[45],PART2[43]])
     pygame.draw.circle(WINDOW, BLACK,CENTER,RADIUS2,1)
 
     for i in range(48):
         if i not in [4,12,20,28,36,44]:
-            pygame.draw.line(WINDOW,BLACK,part1[i],part2[i])
+            pygame.draw.line(WINDOW,BLACK,PART1[i],PART2[i])
         if i in [3,5,11,13,19,21,27,29,35,37,43]:
-            pygame.draw.line(WINDOW,BLACK,part2[i],part3[round(i/8)])
-    pygame.draw.line(WINDOW,BLACK,part2[45],part3[0])
+            pygame.draw.line(WINDOW,BLACK,PART2[i],PART3[round(i/8)])
+    pygame.draw.line(WINDOW,BLACK,PART2[45],PART3[0])
 
-    pygame.draw.polygon(WINDOW,GREY,part3,0)
-    pygame.draw.polygon(WINDOW,BLACK,part3,1)
+    pygame.draw.polygon(WINDOW,GREY,PART3,0)
+    pygame.draw.polygon(WINDOW,BLACK,PART3,1)
 
 
     for i in [3,11,19,27,35]:
         for j in range(1,5):
             k = round(i/8)
-            pygame.draw.line(WINDOW,BLACK,suma(mult(j/5,part2[i]),mult((5-j)/5,part3[k])),suma(mult(j/5,part2[i+2]),mult((5-j)/5,part3[k+1])))
+            pygame.draw.line(WINDOW,BLACK,suma(mult(j/5,PART2[i]),mult((5-j)/5,PART3[k])),suma(mult(j/5,PART2[i+2]),mult((5-j)/5,PART3[k+1])))
     for j in range(1,5):
-        pygame.draw.line(WINDOW,BLACK,suma(mult(j/5,part2[43]),mult((5-j)/5,part3[5])),suma(mult(j/5,part2[45]),mult((5-j)/5,part3[0])))
+        pygame.draw.line(WINDOW,BLACK,suma(mult(j/5,PART2[43]),mult((5-j)/5,PART3[5])),suma(mult(j/5,PART2[45]),mult((5-j)/5,PART3[0])))
 
 
 
@@ -107,8 +116,17 @@ def main():
     while run:
         clock.tick(FPS)
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT: #Permite cerrar el juego
                 run = False
+            if event.type == pygame.MOUSEBUTTONDOWN: # Cuando se hace clic con cualquier botón del ratón
+                lc,mc,rc = pygame.mouse.get_pressed()
+                if lc == 1: # Cuando se hace clic izquierdo
+                    x,y = pygame.mouse.get_pos()
+                    r,theta = polares(x,y)
+                    if RADIUS2 <= r <= RADIUS1: # Clic en la zona circular del tablero
+                        print(r)
+                    
+                    
         draw_window()
     
     pygame.quit()
@@ -116,6 +134,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
