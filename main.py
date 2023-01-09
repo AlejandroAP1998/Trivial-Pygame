@@ -54,10 +54,10 @@ def split_circ(cen,r,n):
 
 PART1 = split_circ(CENTER,RADIUS1,48)
 PART2 = split_circ(CENTER,RADIUS2,48)
-PART3 = split_circ(CENTER,RADIUS3,6) #Divisiones para los caminos interiores
+PART3 = split_circ(CENTER,RADIUS3,6) #Divisiones para los caminos interiores y el hexágono central
 
 def mult(a,v):
-    #Multiplica el escalar a por el vector bidimensional v, y devuelve la tupla de coordenadas del vector resultado.
+    # Multiplica el escalar a por el vector bidimensional v, y devuelve la tupla de coordenadas del vector resultado.
     prod = np.dot(a,v)
     return prod[0],prod[1]
 
@@ -72,6 +72,18 @@ def polares(x,y,cen=CENTER):
     theta = -math.atan2(y-cen[1],x-cen[0])
     return r,theta
 
+def isBetween(theta,t1,t2):
+    # TODO: incompleta, no sé si la acabaré usando.
+    #Calcula si el ángulo theta está entre el ángulo t1, t2 (ambos en (-pi,pi])
+    if t1 >= 0 and t2 >= 0:
+        return t1 <= theta < t2
+    if t1 < 0 and t2 >= 0:
+        return t2 <= theta <= t1 + 2*math.pi
+    if t1 >= 0 and t2 < 0:
+        return t1 <= theta <= t2 + 2*math.pi
+    if t1 < 0 and t2 >= 0:
+        return t2 <= theta <= t1
+    
 
 def draw_board():
     pygame.draw.circle(WINDOW, GREY,CENTER,RADIUS1,0)
@@ -134,4 +146,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
